@@ -1,0 +1,41 @@
+openapi: '3.0.2'
+info:
+  title: Students
+  version: '1.0'
+servers:
+  - url: https://api.server.test/v1
+
+paths:
+  /tasks:
+    get:
+      summary: Information about student
+      responses:
+        '200':
+          description: Students
+          content:
+            application/json:
+              example:
+                - id: 1
+                  name: 'Koto'
+                - id: 2
+                  title: 'lita'
+
+    post:
+      summary: Create a new task
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+              example:
+                title: New Task
+      responses:
+        '201':
+          description: Task created successfully
+        '400':
+          description: Bad request
+
