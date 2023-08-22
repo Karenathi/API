@@ -1,41 +1,89 @@
-openapi: '3.0.2'
+openapi: 3.0.0
 info:
-  title: Students
-  version: '1.0'
-servers:
-  - url: https://api.server.test/v1
-
+  title: API de Gestion des Utilisateurs
+  version: 1.0.0
 paths:
-  /tasks:
-    get:
-      summary: Information about student
-      responses:
-        '200':
-          description: Students
-          content:
-            application/json:
-              example:
-                - id: 1
-                  name: 'Koto'
-                - id: 2
-                  title: 'lita'
-
+  /students:
     post:
-      summary: Create a new task
+      summary: Ajouter un nouvel utilisateur
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                title:
-                  type: string
-              example:
-                title: New Task
+              $ref: "#/components/schemas/Students"
       responses:
         '201':
-          description: Task created successfully
-        '400':
-          description: Bad request
+          description: Utilisateur ajouté avec succès
+    get:
+      summary: Récupérer la liste des utilisateurs
+      responses:
+        '200':
+          description: Liste des utilisateurs récupérée avec succès
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Students"
+  /students/{id}:
+    get:
+      summary: Récupérer un utilisateur par ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Utilisateur récupéré avec succès
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Students"
+    put:
+      summary: Mettre à jour un utilisateur par ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Students"
+      responses:
+        '200':
+          description: Utilisateur mis à jour avec succès
+    delete:
+      summary: Supprimer un utilisateur par ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Utilisateur supprimé avec succès
+components:
+  schemas:
+    Students:
+      type: object
+      properties:
+        id:
+          type: integer
+        first_name:
+          type: string
+        last_name:
+          type: string
+        birth_date:
+          type: string
+          format: date
 
+
+          
